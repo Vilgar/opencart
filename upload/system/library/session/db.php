@@ -25,7 +25,7 @@ final class DB {
 	}
 
 	public function write(string $session_id, array $data): bool {
-		if ($session_id) {
+		if ($session_id && !empty($data)) {
 			$this->db->query("REPLACE INTO `" . DB_PREFIX . "session` SET `session_id` = '" . $this->db->escape($session_id) . "', `data` = '" . $this->db->escape($data ? json_encode($data) : '') . "', `expire` = '" . $this->db->escape(date('Y-m-d H:i:s', time() + $this->config->get('session_expire'))) . "'");
 		}
 
